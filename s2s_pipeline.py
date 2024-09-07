@@ -275,6 +275,7 @@ def main():
             "The STT should be either whisper, whisper-mlx, or paraformer."
         )
     if module_kwargs.llm == "transformers":
+        print('transformers is used!!!')
         from LLM.language_model import LanguageModelHandler
 
         lm = LanguageModelHandler(
@@ -286,7 +287,7 @@ def main():
 
     elif module_kwargs.llm == "open_api":
         from LLM.openai_api_language_model import OpenApiModelHandler
-
+        print('open_api is used!!!')
         lm = OpenApiModelHandler(
             stop_event,
             queue_in=text_prompt_queue,
@@ -295,6 +296,7 @@ def main():
         )
 
     elif module_kwargs.llm == "mlx-lm":
+        print('mlx-lm is used!!!')
         from LLM.mlx_language_model import MLXLanguageModelHandler
         lm = MLXLanguageModelHandler(
             stop_event,

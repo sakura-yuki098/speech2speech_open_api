@@ -89,6 +89,27 @@ Then run the client locally to handle sending microphone input and receiving gen
 python listen_and_play.py --host <IP address of your server>
 ```
 
+Now support open_api LLM with multi-language
+
+SUPPORTED_LANGUAGES = [
+    "en",
+    "fr",
+    "es",
+    "zh",
+    "ja",
+    "ko",
+]
+
+the next three attributes should be set
+--melo_language
+--melo_speaker_to_id
+--language
+
+Example with melo and local lm-studio api
+```bash
+python s2s_pipeline.py --llm open_api --open_api_model_name bartowski/gemma-2-9b-it-GGUF --open_api_api_key lm-studio --open_api_base_url http://localhost:1234/v1 --tts melo --stt_model_name openai/whisper-large-v3 --melo_language zh --melo_speaker_to_id zh --language zh --open_api_init_chat_prompt 你作为用户的朋友，只使用中文回答，在20字以内
+```
+
 ### Running on Mac
 To run on mac, we recommend setting the flag `--local_mac_optimal_settings`:
 ```bash

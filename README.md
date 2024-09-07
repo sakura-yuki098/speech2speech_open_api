@@ -74,10 +74,9 @@ The pipeline can be run in two ways:
 
 https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
-#### Start the docker container
-DOCKER IS UNCHANGED FROM ORIGINAL PROJECT!
-https://github.com/huggingface/speech-to-speech
-If you want to use new feature, do not run in docker file of this repository.
+**DOCKER CONFIGURATION REMAINS UNCHANGED FROM THE ORIGINAL PROJECT!**  
+You can find the original repository here: [https://github.com/huggingface/speech-to-speech](https://github.com/huggingface/speech-to-speech).  
+If you want to use the new features, do not run the Dockerfile from this repository.
 
 ### Server/Client Approach
 
@@ -91,26 +90,39 @@ Then run the client locally to handle sending microphone input and receiving gen
 python listen_and_play.py --host <IP address of your server>
 ```
 
-Now support open_api LLM with multi-language
+### OpenAPI LLM with Multi-Language Support
 
+The system now supports multi-language processing through OpenAPI LLM.
+
+Melo TTS is necessary in running example.
+
+Supported languages:
+
+```python
 SUPPORTED_LANGUAGES = [
-    "en",
-    "fr",
-    "es",
-    "zh",
-    "ja",
-    "ko",
+    "en",  # English
+    "fr",  # French
+    "es",  # Spanish
+    "zh",  # Chinese
+    "ja",  # Japanese
+    "ko",  # Korean
 ]
-
-the next three attributes should be set
---melo_language
---melo_speaker_to_id
---language
-
-Example with melo and local lm-studio api
-```bash
-python s2s_pipeline.py --llm open_api --open_api_model_name bartowski/gemma-2-9b-it-GGUF --open_api_api_key lm-studio --open_api_base_url http://localhost:1234/v1 --tts melo --stt_model_name openai/whisper-large-v3 --melo_language zh --melo_speaker_to_id zh --language zh --open_api_init_chat_prompt 你作为用户的朋友，只使用中文回答，在20字以内
 ```
+
+To configure the system, you need to set the following three attributes:
+
+- `--melo_language`
+- `--melo_speaker_to_id`
+- `--language`
+
+#### Example using Melo and a Local lm-studio API
+
+To run the pipeline with the new features:
+
+```bash
+python s2s_pipeline.py --llm open_api --open_api_model_name bartowski/gemma-2-9b-it-GGUF --open_api_api_key lm-studio --open_api_base_url http://localhost:1234/v1 --tts melo --stt_model_name openai/whisper-large-v3 --melo_language zh --melo_speaker_to_id zh --language zh --open_api_init_chat_prompt "你作为用户的朋友，只使用中文回答，在20字以内"
+```
+
 
 ### Running on Mac
 To run on mac, we recommend setting the flag `--local_mac_optimal_settings`:

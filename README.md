@@ -75,7 +75,9 @@ The pipeline can be run in two ways:
 https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
 #### Start the docker container
-```docker compose up```
+DOCKER IS UNCHANGED FROM ORIGINAL PROJECT!
+https://github.com/huggingface/speech-to-speech
+If you want to use new feature, do not run in docker file of this repository.
 
 ### Server/Client Approach
 

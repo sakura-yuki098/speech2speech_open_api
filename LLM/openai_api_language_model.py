@@ -61,40 +61,37 @@ class OpenApiModelHandler(BaseHandler):
     def process(self, prompt):
         logger.debug("call api language model...")
         
-        # 确保 prompt 是字符串
+        # Ensure prompt is a string
         if isinstance(prompt, tuple):
-            prompt = prompt[0]  # 如果是元组，取第一个元素作为字符串
+            prompt = prompt[0]  # If it's a tuple, take the first element as the string
         
-        # 将用户输入追加到对话上下文中
+        # Append user input to the chat context
         self.chat.append({"role": self.user_role, "content": prompt})
         
-        # 构建完整的消息上下文，包括历史对话和系统提示词
+        # Build the complete message context, including history and system prompts
         messages = self.chat.to_list()
 
-        # 调试输出到文件
-        self.save_to_file(f"User prompt: {prompt}")
-        self.save_to_file(f"Messages being sent to API: {messages}")
-
-        # 检查 messages 列表的格式是否正确
+        # Check if the messages list format is correct
         for message in messages:
             if not isinstance(message, dict) or 'role' not in message or 'content' not in message:
                 self.save_to_file(f"Invalid message format: {message}")
                 raise ValueError(f"Invalid message format: {message}")
 
-        # 调用API生成响应
+        # Call the API to generate a response
         response = self.client.chat.completions.create(
             model=self.model_name,
             messages=messages,
             stream=self.stream
         )
         
-        # 获取生成的文本
+        # Get the generated text
         generated_text = response.choices[0].message.content
         
-        # 将生成的响应加入到聊天上下文中
+        # Append the generated response to the chat context
         self.chat.append({"role": "assistant", "content": generated_text})
         
-        # 输出生成的文本，并保存到文件
+        # Output the generated text and save it to a file
         self.save_to_file(f"Generated text: {generated_text}")
         yield generated_text
+
 
